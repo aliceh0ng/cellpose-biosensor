@@ -1,0 +1,26 @@
+# Raw and processed data — too large for git, use DVC or just document paths
+data/raw/
+data/processed/
+data/results/
+figures/
+ 
+# Cellpose model files
+models/finetuned/*.npy
+models/finetuned/*.pth
+ 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.env
+ 
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+ 
+# OS
+.DS_Store
+Thumbs.db
