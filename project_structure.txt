@@ -1,0 +1,45 @@
+cellpose-biosensor/
+├── environment.yml               # conda env definition — version controlled
+├── README.md                     # project overview, methods, data notes
+├── .gitignore
+│
+├── data/
+│   ├── raw/                      # original 16-bit TIFFs — READ ONLY, never modified
+│   │   └── 16 bit/   
+│   │       └── *.tif             # (4, H, W) uint16 stacks
+│   │   └── rbg/ 
+│   │       └── *.tif             # (4, H, W) uint16 stacks
+│   ├── processed/                # tiles, normalized images produced by scripts
+│   │   └── tiles/
+│   ├── annotations/              # hand-drawn masks for fine-tuning
+│   │   ├── images/               # normalized BFP tiles (inputs to model)
+│   │   └── masks/                # integer label masks (one per image tile)
+│   └── results/                  # per-cell measurement CSVs
+│
+├── notebooks/
+│   ├── 00_data_exploration.ipynb         # inspect raw images, check bit depth, stats
+│   ├── 01_tiling_preprocessing.ipynb     # tile large images, export for annotation
+│   ├── 02_cellpose_baseline.ipynb        # run cpsam out-of-the-box, visual check
+│   ├── 03_annotation_workflow.ipynb      # notes on annotation strategy, QC
+│   ├── 04_finetuning.ipynb               # fine-tune cpsam on annotated data
+│   ├── 05_segmentation_pipeline.ipynb    # full pipeline on all images
+│   ├── 06_intensity_measurement.ipynb    # extract BFP/GFP/RFP per cell
+│   └── 07_analysis_plots.ipynb           # ratio distributions, comparisons
+│
+├── src/
+│   ├── __init__.py
+│   ├── io.py            # load_stack(), save_masks(), tile_image()
+│   ├── preprocess.py    # normalize_channel(), subtract_background()
+│   ├── segment.py       # run_cellpose(), filter_masks()
+│   ├── measure.py       # extract_intensities(), compute_ratios()
+│   └── qc.py            # spectral_filter(), sytox_exclusion(), size_filter()
+│
+├── scripts/
+│   ├── run_pipeline.py   # CLI: process a whole directory of stacks end-to-end
+│   └── export_tiles.py   # CLI: export tiles ready for Cellpose GUI annotation
+│
+├── models/
+│   └── finetuned/        # saved fine-tuned .npy model weights go here
+│
+└── figures/
+    └── qc/               # per-image QC figures
