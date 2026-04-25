@@ -1,0 +1,27 @@
+{
+  "run_name": "4stacks_5x5_norm",
+  "date": "2026-04-24",
+  "annotated_stacks": [
+    "Scene-01-20260416-C3M2_Tcol_1-A01Export-01_c1-4_stack",
+    "Scene-04-20260416-C3M2_Tcol_3-A01Export-06_c1-4_stack",
+    "Scene-05-20260416-C3M2_Pcol_2-A01Export-07_c1-4_stack",
+    "Scene-06-20260416-C3M2_Pcol_1-A01Export-08_c1-4_stack"
+  ],
+  "train_stacks": [
+    "Scene-01-20260416-C3M2_Tcol_1-A01Export-01_c1-4_stack",
+    "Scene-04-20260416-C3M2_Tcol_3-A01Export-06_c1-4_stack",
+    "Scene-06-20260416-C3M2_Pcol_1-A01Export-08_c1-4_stack"
+  ],
+  "val_stacks": [
+    "Scene-05-20260416-C3M2_Pcol_2-A01Export-07_c1-4_stack"
+  ],
+  "n_train_patches": 75,
+  "n_val_patches": 25,
+  "n_cells_total": 3913,
+  "n_epochs": 100,
+  "ap_base": 0.6406,
+  "ap_finetuned": 0.7243,
+  "model_path": "D:\\cellpose-biosensor\\cellpose-biosensor\\models\\finetuned\\4stacks_5x5_norm\\models\\cpsam_4stacks_5x5_norm",
+  "losses_npz": "D:\\cellpose-biosensor\\cellpose-biosensor\\models\\finetuned\\4stacks_5x5_norm\\losses.npz",
+  "losses_json": "D:\\cellpose-biosensor\\cellpose-biosensor\\models\\finetuned\\4stacks_5x5_norm\\losses.json"
+}

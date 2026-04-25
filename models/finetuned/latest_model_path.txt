@@ -1,0 +1,1 @@
+D:\cellpose-biosensor\cellpose-biosensor\models\finetuned\4stacks_5x5_norm\models\cpsam_4stacks_5x5_norm

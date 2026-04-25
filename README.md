@@ -1,4 +1,4 @@
-# cellpose-biosensor
+# Final Project for BMEG 591T!
 
 Fine-tuning Cellpose-SAM for segmentation of individual fluorescent bacteria in Airyscan confocal images of mouse colon tissue sections, with per-cell fluorescence intensity measurement.
 
