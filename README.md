@@ -21,7 +21,6 @@ Iterative "human-in-the-loop" fine-tuning of Cellpose-SAM on manually corrected 
 
 Applies the train.train_seg() custom function by Pachitariu and Rariden (cellpose-SAM authors). I've illustrated the function here:
 ![Flowchart](figures/train.train_seg.png)
-
 ## Current results
 
 | Model | Internal val AP@0.5 | External val AP@0.5 (Scene-02) |
