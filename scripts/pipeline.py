@@ -58,7 +58,7 @@ SPLITS_FILE = PROJECT_ROOT / 'data' / 'splits.json'
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 MASKS_DIR.mkdir(parents=True, exist_ok=True)
 
-# ── Parameters ─────────────────────────────────────────────────────────────────
+# Parameters 
 N_ROWS          = 3
 N_COLS          = 3
 PIXEL_SIZE_UM   = 0.035

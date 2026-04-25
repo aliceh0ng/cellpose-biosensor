@@ -1,11 +1,12 @@
-# Raw and processed data — too large for git, use DVC or just document paths
-data/raw/
-data/processed/
-data/results/
-data/patches/
+# Large data files — track folder structure via .gitkeep, not the files
+*.tif
+*.tiff
+*.npy
+*.nii
+*.nii.gz
+data/results/*.csv
 
 # Cellpose model files
-models/finetuned/*.npy
 models/finetuned/*.pth
 models/finetuned/*/models/
 *.npz
