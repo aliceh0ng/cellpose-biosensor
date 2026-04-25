@@ -20,6 +20,8 @@ cellpose-biosensor/
 │   ├── 00_data_exploration.ipynb         # inspect raw images, check bit depth, stats
 │   ├── 01_tiling_preprocessing.ipynb     # tile large images, export for annotation
 │   ├── 02_cellpose_baseline.ipynb        # run cpsam out-of-the-box, visual check
+│   ├── 03_model_comparison.ipynb
+
 │   ├── 03_annotation_workflow.ipynb      # notes on annotation strategy, QC
 │   ├── 04_finetuning.ipynb               # fine-tune cpsam on annotated data
 │   ├── 05_segmentation_pipeline.ipynb    # full pipeline on all images

@@ -45,52 +45,49 @@ def save_masks(masks: np.ndarray, path: str | Path) -> None:
                      compression='lzw', photometric='minisblack')
 
 
-def tile_image(img: np.ndarray, tile_size: int = 512,
-               overlap: int = 64) -> list[dict]:
+def split_image(img: np.ndarray,
+                n_rows: int = 3,
+                n_cols: int = 3) -> list[dict]:
     """
-    Split a 2D image into overlapping tiles for model inference.
+    Split a 2D image into n_rows × n_cols equal patches.
+
+    Patches are sized by np.linspace so edge patches absorb any remainder
+    pixels — no padding, no overlap.
 
     Returns a list of dicts with keys:
-        'tile'  : (tile_size, tile_size) crop
-        'y0', 'x0' : top-left corner in original image
+        'tile'       : 2D crop (actual patch array)
+        'y0', 'x0'  : top-left corner in original image
+        'h', 'w'    : patch height and width
+        'row', 'col': grid position (0-indexed)
     """
     H, W = img.shape[:2]
-    stride = tile_size - overlap
-    tiles = []
-    for y0 in range(0, H, stride):
-        for x0 in range(0, W, stride):
-            y1 = min(y0 + tile_size, H)
-            x1 = min(x0 + tile_size, W)
-            # Pad if tile is smaller than tile_size
-            tile = np.zeros((tile_size, tile_size), dtype=img.dtype)
-            crop = img[y0:y1, x0:x1]
-            tile[:crop.shape[0], :crop.shape[1]] = crop
-            tiles.append({'tile': tile, 'y0': y0, 'x0': x0,
-                          'h': y1 - y0, 'w': x1 - x0})
-    return tiles
+    row_edges = np.linspace(0, H, n_rows + 1, dtype=int)
+    col_edges = np.linspace(0, W, n_cols + 1, dtype=int)
+    patches = []
+    for r in range(n_rows):
+        for c in range(n_cols):
+            y0, y1 = int(row_edges[r]), int(row_edges[r + 1])
+            x0, x1 = int(col_edges[c]), int(col_edges[c + 1])
+            patches.append({
+                'tile': img[y0:y1, x0:x1],
+                'y0': y0, 'x0': x0,
+                'h': y1 - y0, 'w': x1 - x0,
+                'row': r, 'col': c,
+            })
+    return patches
 
 
-def stitch_masks(tiles: list[dict], H: int, W: int,
-                 overlap: int = 64) -> np.ndarray:
+def stitch_masks(patches: list[dict], H: int, W: int) -> np.ndarray:
     """
-    Reassemble tiled masks into a full-image label array.
-    Uses simple max-value voting in overlap regions.
-    For production use, consider the cellpose built-in stitch_threshold instead.
+    Reassemble patch masks into a full-image label array.
+    Cell IDs are remapped to be globally unique.
+    Cells that fall on a patch boundary will be split — this is expected.
     """
     full = np.zeros((H, W), dtype=np.int32)
-    offset = 0  # track global cell ID across tiles
-    for t in tiles:
-        y0, x0 = t['y0'], t['x0']
-        h, w = t['h'], t['w']
-        m = t['mask'][:h, :w].astype(np.int32)
-        # Remap IDs to global space
-        m_shifted = np.where(m > 0, m + offset, 0)
-        offset += m.max()
-        # Write into output (non-overlapping core region)
-        pad = overlap // 2
-        ys = max(0, y0 + pad)
-        xs = max(0, x0 + pad)
-        ye = min(H, y0 + h - pad)
-        xe = min(W, x0 + w - pad)
-        full[ys:ye, xs:xe] = m_shifted[ys-y0:ye-y0, xs-x0:xe-x0]
+    offset = 0
+    for p in patches:
+        y0, x0, h, w = p['y0'], p['x0'], p['h'], p['w']
+        m = p['mask'][:h, :w].astype(np.int32)
+        full[y0:y0+h, x0:x0+w] = np.where(m > 0, m + offset, 0)
+        offset += int(m.max())
     return full

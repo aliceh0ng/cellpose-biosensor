@@ -22,7 +22,8 @@ def run_cellpose_sam(bfp_norm: np.ndarray,
     Returns:
         2D integer label mask (0 = background, 1..N = individual cells)
     """
-    model = models.CellposeModel(model_type='cpsam', gpu=gpu)
+    # Cellpose v4 defaults to cpsam; `model_type` is ignored in v4.0.1+.
+    model = models.CellposeModel(gpu=gpu)
     masks, flows, styles = model.eval(
         bfp_norm,
         diameter=diameter,

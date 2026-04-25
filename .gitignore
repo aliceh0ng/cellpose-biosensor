@@ -2,11 +2,18 @@
 data/raw/
 data/processed/
 data/results/
-figures/
- 
+data/patches/
+
 # Cellpose model files
 models/finetuned/*.npy
 models/finetuned/*.pth
+models/finetuned/*/models/
+*.npz
+
+# Misc
+project_structure.txt
+cellpose-biosensor.Rproj
+*.svg
  
 # Python
 __pycache__/
@@ -25,3 +32,4 @@ build/
 .DS_Store
 Thumbs.db
 cellpose-biosensor/
+.Rproj.user
