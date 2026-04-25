@@ -17,13 +17,10 @@ Pixel size: **0.035 µm/px**. Raw files are `(4, H, W)` uint16 TIFFs exported fr
 
 ## Approach
 
-Iterative "human-in-the-loop" fine-tuning of Cellpose-SAM on manually corrected masks from domain-specific images (bacteria in non-cleared colon tissue with fecal autofluorescence). The fine-tuned model is applied to all 37 image stacks; intensity measurements are extracted from raw 16-bit data using the generated masks.
+Iterative "human-in-the-loop" fine-tuning of Cellpose-SAM on manually corrected masks from my bacteria in non-cleared colon tissue with a relatively high level of fecal autofluorescence. 
 
-## Key challenges
-
-- **Fecal autofluorescence** — broad-spectrum signal bright in BFP, GFP, and RFP simultaneously; filtered post-segmentation using min(GFP, RFP)/BFP ratio
-- **Non-cleared tissue** — host cell autofluorescence, out-of-plane blur, heterogeneous background
-- **Large stitched images** (~6300×6300 px) — split into a 3×3 or 5×5 grid of patches for model input
+Applies the train.train_seg() custom function by Pachitariu and Rariden (cellpose-SAM authors). I've illustrated the function here:
+![Flowchart](figures/train.train_seg.png)
 
 ## Current results
 
