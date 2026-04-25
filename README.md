@@ -2,6 +2,10 @@
 
 Fine-tuning Cellpose-SAM for segmentation of individual fluorescent bacteria in Airyscan confocal images of mouse colon tissue sections.
 
+Presentation found here:
+[![Final Presentation](figures/youtube_thumbnail.png)](https://youtu.be/ORrL1wdWfvk)
+
+
 ## Description of dataset 
 
 Germ-free mice monocolonised with a genetically engineered *E. coli* Nissle 1917 strain carrying a constitutive BFP reporter and two stress-inducible reporters (GFP, RFP). Tissue sections were imaged by Zeiss Airyscan confocal (100×, 5×5 tile scans, 16-bit, ~6300×6300 px per image).
